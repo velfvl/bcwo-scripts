@@ -10,7 +10,17 @@ credits:
 made by vel
 ]]
 
-if getgenv().set.toggled == false then return end
+local toggled = getgenv.set[1]
+
+local pinguser = getgenv.set[2]
+
+local eventwbh = getgenv.set.webhook[3][1]
+local statswbh = getgenv.set.webhook[3][2]
+local chatwbh = getgenv.set.webhook[3][3]
+
+local summonitemnames = getgenv.set.webhook[4]
+
+if toggled == false then return end
 repeat task.wait() until game:IsLoaded()
 local player = game:GetService("Players").LocalPlayer
 player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vecter2.new())end)
@@ -138,7 +148,7 @@ function messagesend(url,message)
 end
 
 player.PlayerGui.Chat.Frame.ChatChannelParentFrame.Frame_MessageLogDisplay.Scroller.DescendantAdded:Connect(function(frame)
-	if getgenv().set.toggled == false then return end
+	if toggled == false then return end
 	if frame:IsA('Frame') then
 		for _,msg in pairs(prioritizedmsgs) do
 			if frame.TextLabel.Text == msg.Message then
@@ -163,13 +173,13 @@ if game.PlaceId == 8811271345 then
 	embedsend(statswbh,getstatslogembed())
 	coroutine.wrap(function()
 		while true do task.wait()
-			if character:FindFirstChild("Shield") and getgenv().set.toggled ~= false then
+			if character:FindFirstChild("Shield") and toggled ~= false then
 				character.Shield.ShieldRemote:FireServer()
 			end
 		end
 	end)()
 	coroutine.wrap(function()
-		while true do task.wait() if getgenv().set.toggled == false then break end
+		while true do task.wait() if toggled == false then break end
 			--character:SetPrimaryPartCFrame(spawncf)
 			for _,item in pairs(summonitemnames) do
 				local tool = player.Backpack:FindFirstChild(item.Name) or player.Character:FindFirstChild(item.Name)
@@ -192,7 +202,7 @@ end
 
 coroutine.wrap(function()
 	while task.wait(1800) do
-		if getgenv().set.toggled == false then break end
+		if toggled == false then break end
 		embedsend(statswbh,getstatslogembed())
 	end
 end)()

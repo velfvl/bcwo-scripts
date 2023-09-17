@@ -9,6 +9,7 @@ literal afk machine
 credits:
 made by vel
 ]]
+print("auto biome launched")
 
 local toggled = getgenv.set[1]
 

@@ -9,17 +9,18 @@ literal afk machine
 credits:
 made by vel
 ]]
-
-if getgenv().on == false then return end
-repeat task.wait() until game:IsLoaded()
-local player = game:GetService("Players").LocalPlayer
-player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vecter2.new())end)
+getgenv().on = true
 
 local pinguser = "<@>" --@discorduserid
 
 local eventwbh = "" --webhook
 local statswbh = "" --webhook
 local chatwbh = "" --webhook
+
+if getgenv().on == false then return end
+repeat task.wait() until game:IsLoaded()
+local player = game:GetService("Players").LocalPlayer
+player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vecter2.new())end)
 
 local character = player.Character
 local vim = game:GetService("VirtualInputManager")

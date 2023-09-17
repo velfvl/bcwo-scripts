@@ -184,7 +184,7 @@ if game.PlaceId == 8811271345 then
 	embedsend(statswbh,getstatslogembed())
 	coroutine.wrap(function()
 		while true do task.wait()
-			if character:FindFirstChild("Shield") and toggled ~= false then
+			if character:FindFirstChild("Shield") and character:FindFirstChild("ShieldForceField") and toggled ~= false then
 				character.Shield.ShieldRemote:FireServer()
 			end
 		end

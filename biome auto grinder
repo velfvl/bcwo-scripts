@@ -10,7 +10,7 @@ credits:
 made by vel
 ]]
 
-if getgenv().on == false then return end
+if getgenv().set.toggled == false then return end
 repeat task.wait() until game:IsLoaded()
 local player = game:GetService("Players").LocalPlayer
 player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vecter2.new())end)
@@ -63,20 +63,6 @@ function timeconv(secs)
 	local hrs = (mins - mins%60)/60
 	mins = mins - hrs*60
 	return Format(hrs).." hrs, "..Format(mins).." mins and "..Format(secs).." secs"
-end
-
-function getdclogembed(reason)
-	local dclogembed = {
-		["title"] = "You disconnected! | BCWO DC LOG | ".. timeconv(time()),
-    	["description"] = player.Name.." disconnected from the server!\nReason: ".. reason,
-		['type'] = "rich",
-	    ["color"] = tonumber(0xff0000),
-	    ["fields"] = {},
-	    ["footer"] = {
-    	    ["text"] = "```Others:\nPlaceId: ".. game.PlaceId.. "\nJobId: ".. game.JobId.. "\nUserId: ".. player.UserId.."\nPing: ".. player:GetNetworkPing() * (1000).. "ms```"
-    	}
-	}
-	return dclogembed
 end
 
 function getstatslogembed()
@@ -152,7 +138,7 @@ function messagesend(url,message)
 end
 
 player.PlayerGui.Chat.Frame.ChatChannelParentFrame.Frame_MessageLogDisplay.Scroller.DescendantAdded:Connect(function(frame)
-	if getgenv().on == false then return end
+	if getgenv().set.toggled == false then return end
 	if frame:IsA('Frame') then
 		for _,msg in pairs(prioritizedmsgs) do
 			if frame.TextLabel.Text == msg.Message then
@@ -164,7 +150,7 @@ player.PlayerGui.Chat.Frame.ChatChannelParentFrame.Frame_MessageLogDisplay.Scrol
 				    ["fields"] = {},
 				    ["footer"] = {
     				    ["text"] = "```Others:\nPlaceId: ".. game.PlaceId.. "\nJobId: ".. game.JobId.. "\nUserId: ".. player.UserId.. "\nPing: ".. player:GetNetworkPing() * (1000).. "ms```"
-    				}
+    					}
 				}
 				embedsend(eventwbh,msgembed,pinguser)
 			end
@@ -177,13 +163,13 @@ if game.PlaceId == 8811271345 then
 	embedsend(statswbh,getstatslogembed())
 	coroutine.wrap(function()
 		while true do task.wait()
-			if character:FindFirstChild("Shield") and getgenv().on ~= false then
+			if character:FindFirstChild("Shield") and getgenv().set.toggled ~= false then
 				character.Shield.ShieldRemote:FireServer()
 			end
 		end
 	end)()
 	coroutine.wrap(function()
-		while true do task.wait() if getgenv().on == false then break end
+		while true do task.wait() if getgenv().set.toggled == false then break end
 			--character:SetPrimaryPartCFrame(spawncf)
 			for _,item in pairs(summonitemnames) do
 				local tool = player.Backpack:FindFirstChild(item.Name) or player.Character:FindFirstChild(item.Name)
@@ -206,7 +192,7 @@ end
 
 coroutine.wrap(function()
 	while task.wait(1800) do
-		if getgenv().on == false then break end
+		if getgenv().set.toggled == false then break end
 		embedsend(statswbh,getstatslogembed())
 	end
 end)()

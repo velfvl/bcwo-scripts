@@ -19,10 +19,13 @@ local chatwbh = set[3][3]
 
 local summonitemnames = set[4]
 
-if toggled == false then return end print("init")
-repeat task.wait() until game:IsLoaded()
+
+
+repeat task.wait() until game:IsLoaded()print("init")
 local player = game:GetService("Players").LocalPlayer
-player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vecter2.new())end)
+if toggled == true then 
+	player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vecter2.new())end)
+end
 
 local character = player.Character
 local vim = game:GetService("VirtualInputManager")
@@ -191,10 +194,10 @@ if game.PlaceId == 8811271345 then
 	coroutine.wrap(function()
 		while true do task.wait() if toggled == false then break end
 			--character:SetPrimaryPartCFrame(spawncf)
-			for _,item in pairs(summonitemnames) do
+			for _,item in pairs(summonitemnames) do if toggled == false then break end
 				local tool = player.Backpack:FindFirstChild(item.Name) or player.Character:FindFirstChild(item.Name)
 				if tool then 
-					for i = 1,#item.Spawns do
+					for i = 1,#item.Spawns do if toggled == false then break end
 						if not workspace:FindFirstChild(item.Spawns[i]) then
 							tool.Parent = character
 							vim:SendMouseButtonEvent(0, 0, 0, true, game, 1)

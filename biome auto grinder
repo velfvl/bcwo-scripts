@@ -9,7 +9,6 @@ literal afk machine
 credits:
 made by vel
 ]]
-getgenv().on = true
 
 if getgenv().on == false then return end
 repeat task.wait() until game:IsLoaded()

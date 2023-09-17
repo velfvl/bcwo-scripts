@@ -160,7 +160,7 @@ function messagesend(url,message)
 end
 
 player.PlayerGui.Chat.Frame.ChatChannelParentFrame.Frame_MessageLogDisplay.Scroller.DescendantAdded:Connect(function(frame)
-	if frame:IsA('Frame') then
+	if frame:IsA('Frame') and toggled == true then
 		for _,msg in pairs(prioritizedmsgs) do
 			if frame.TextLabel.Text == msg.Message then
 				local msgembed = {

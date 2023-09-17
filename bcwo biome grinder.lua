@@ -11,15 +11,15 @@ made by vel
 ]]
 print("auto biome launched")
 
-local toggled = getgenv.set[1]
+local toggled = set.on
 
-local pinguser = getgenv.set[2]
+local pinguser = set.ping
 
-local eventwbh = getgenv.set[3][1]
-local statswbh = getgenv.set[3][2]
-local chatwbh = getgenv.set[3][3]
+local eventwbh = set.webhooks[1]
+local statswbh = set.webhooks[2]
+local chatwbh = set.webhooks[3]
 
-local summonitemnames = getgenv.set[4]
+local summonitemnames = set.summonitems
 
 if toggled == false then return end print("init")
 repeat task.wait() until game:IsLoaded()
@@ -35,32 +35,36 @@ local prioritizedmsgs = {
 	[1] = {
 		["Message"] = "A bright light is blinding the world!",
 		["Name"] = "The Blinding Light",
-		[""]
+		["Description"] = "",
 		["Color"] = tonumber(0xffffff)
 	},
 	[2] = {
 		["Message"] = "The world is being shrouded in darkness!",
 		["Name"] = "The Shrouding Darkness",
+		["Description"] = "",
 		["Color"] = tonumber(0x000000)
 	},
 	[3] = {
 		["Message"] = "Your actions have created imbalances to reality.",
 		["Name"] = "Cultist Army",
+		["Description"] = "",
 		["Color"] = tonumber(0x333333)
 	},
 	[4] = {
 		["Message"] = "The angels of the sky are descending!",
 		["Name"] = "The Heavens",
+		["Description"] = "",
 		["Color"] = tonumber(0xecbc00)
 	},
 	[5] = {
 		["Message"] = "The void has infiltrated reality!",
 		["Name"] = "The Void",
+		["Description"] = "",
 		["Color"] = tonumber(0x301f41)
 	},
 	[6] = {
 		["Message"] = "[Server]: Interdimensional Travelling Merchant Rain has arrived!",
-		[""]
+		["Description"] = "",
 		["Name"] = "Travelling Merchant Rain",
 		["Color"] = tonumber(0xe82424)
 	}

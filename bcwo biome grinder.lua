@@ -9,17 +9,15 @@ literal afk machine
 credits:
 made by vel
 ]]
-print("auto biome launched")
+local toggled = set[1]
 
-local toggled = set.on
+local pinguser = set[2]
 
-local pinguser = set.ping
+local eventwbh = set[3][1]
+local statswbh = set[3][2]
+local chatwbh = set[3][3]
 
-local eventwbh = set.webhooks[1]
-local statswbh = set.webhooks[2]
-local chatwbh = set.webhooks[3]
-
-local summonitemnames = set.summonitems
+local summonitemnames = set[4]
 
 if toggled == false then return end print("init")
 repeat task.wait() until game:IsLoaded()
@@ -69,8 +67,6 @@ local prioritizedmsgs = {
 		["Color"] = tonumber(0xe82424)
 	}
 }
-
-print("tables set")
 
 function Format(Int)
 	return string.format("%02i", Int)
@@ -155,8 +151,6 @@ function messagesend(url,message)
         Body = body
     })
 end
-
-print("functions set")
 
 player.PlayerGui.Chat.Frame.ChatChannelParentFrame.Frame_MessageLogDisplay.Scroller.DescendantAdded:Connect(function(frame)
 	if toggled == false then return end

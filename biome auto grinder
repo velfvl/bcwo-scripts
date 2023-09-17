@@ -35,6 +35,7 @@ local prioritizedmsgs = {
 	[1] = {
 		["Message"] = "A bright light is blinding the world!",
 		["Name"] = "The Blinding Light",
+		[""]
 		["Color"] = tonumber(0xffffff)
 	},
 	[2] = {
@@ -59,10 +60,13 @@ local prioritizedmsgs = {
 	},
 	[6] = {
 		["Message"] = "[Server]: Interdimensional Travelling Merchant Rain has arrived!",
+		[""]
 		["Name"] = "Travelling Merchant Rain",
 		["Color"] = tonumber(0xe82424)
 	}
 }
+
+print("tables set")
 
 function Format(Int)
 	return string.format("%02i", Int)
@@ -147,6 +151,8 @@ function messagesend(url,message)
         Body = body
     })
 end
+
+print("functions set")
 
 player.PlayerGui.Chat.Frame.ChatChannelParentFrame.Frame_MessageLogDisplay.Scroller.DescendantAdded:Connect(function(frame)
 	if toggled == false then return end

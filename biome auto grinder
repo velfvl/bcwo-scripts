@@ -20,17 +20,6 @@ local vim = game:GetService("VirtualInputManager")
 
 --local spawncf = character.PrimaryPart.CFrame*CFrame.new(0,40,0)
 
-local summonitemnames = {
-	[1] = {
-		["Name"] = "Synodic Energy Reactor", --tool name
-		["Spawns"] = {"Equinox Construct Summon"} --summon name
-	}, 	
-	[2] = { --delete this table if 2nd tool is not needed
-		["Name"] = "Unknown Signal Emitter",
-		["Spawns"] = {"Cybil"}
-	}
-}
-
 local prioritizedmsgs = {
 	[1] = {
 		["Message"] = "A bright light is blinding the world!",

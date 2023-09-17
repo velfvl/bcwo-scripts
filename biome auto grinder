@@ -19,7 +19,7 @@ local eventwbh = getgenv.set.webhook[3][1]
 local statswbh = getgenv.set.webhook[3][2]
 local chatwbh = getgenv.set.webhook[3][3]
 
-local summonitemnames = getgenv.set.webhook[4]
+local summonitemnames = getgenv.set[4]
 
 if toggled == false then return end
 repeat task.wait() until game:IsLoaded()

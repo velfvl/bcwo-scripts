@@ -10,7 +10,7 @@ credits:
 made by vel
 ]]
 print("auto biome launched")
---[[
+
 local toggled = getgenv.set[1]
 
 local pinguser = getgenv.set[2]
@@ -20,7 +20,7 @@ local statswbh = getgenv.set[3][2]
 local chatwbh = getgenv.set[3][3]
 
 local summonitemnames = getgenv.set[4]
-]]
+
 if toggled == false then return end print("init")
 repeat task.wait() until game:IsLoaded()
 local player = game:GetService("Players").LocalPlayer

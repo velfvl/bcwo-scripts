@@ -33,37 +33,43 @@ local prioritizedmsgs = {
 	[1] = {
 		["Message"] = "A bright light is blinding the world!",
 		["Name"] = "The Blinding Light",
-		["Description"] = "",
+		["Title"] = "Light has beamed upon you with a heave of energy",
 		["Color"] = tonumber(0xffffff)
 	},
 	[2] = {
 		["Message"] = "The world is being shrouded in darkness!",
 		["Name"] = "The Shrouding Darkness",
-		["Description"] = "",
+		["Title"] = "Darkness is brought upon you from a dark source.",
 		["Color"] = tonumber(0x000000)
 	},
 	[3] = {
 		["Message"] = "Your actions have created imbalances to reality.",
 		["Name"] = "Cultist Army",
-		["Description"] = "",
+		["Title"] = "Cultist army has arrived.",
 		["Color"] = tonumber(0x333333)
 	},
 	[4] = {
 		["Message"] = "The angels of the sky are descending!",
 		["Name"] = "The Heavens",
-		["Description"] = "",
+		["Title"] = "Angels have descended!",
 		["Color"] = tonumber(0xecbc00)
 	},
 	[5] = {
 		["Message"] = "The void has infiltrated reality!",
 		["Name"] = "The Void",
-		["Description"] = "",
+		["Title"] = "Void has spawn!",
 		["Color"] = tonumber(0x301f41)
 	},
 	[6] = {
 		["Message"] = "[Server]: Interdimensional Travelling Merchant Rain has arrived!",
-		["Description"] = "",
 		["Name"] = "Travelling Merchant Rain",
+		["TItle"] = "Rain has arrived!",
+		["Color"] = tonumber(0xe82424)
+	},
+	[7} = {
+		["Message"] = "[Server]: Interdimensional Travelling Merchant Rain has left the island!",
+		["Name"] = "Travelling Merchant Rain",
+		["TItle"] = "Rain has left!",
 		["Color"] = tonumber(0xe82424)
 	}
 }
@@ -158,8 +164,8 @@ player.PlayerGui.Chat.Frame.ChatChannelParentFrame.Frame_MessageLogDisplay.Scrol
 		for _,msg in pairs(prioritizedmsgs) do
 			if frame.TextLabel.Text == msg.Message then
 				local msgembed = {
-					["title"] = msg.Name.." spawned! | BCWO BIOME LOG | ".. timeconv(time()),
-    				["description"] = '"'..msg.Message..'"',
+					["title"] = msg.Title.." | BCWO BIOME LOG | ".. timeconv(time()),
+    				["description"] = '"'..msg.Name..'"',
 					['type'] = "rich",
 				    ["color"] = msg.Color,
 				    ["fields"] = {},

@@ -15,9 +15,9 @@ local toggled = getgenv.set[1]
 
 local pinguser = getgenv.set[2]
 
-local eventwbh = getgenv.set.webhook[3][1]
-local statswbh = getgenv.set.webhook[3][2]
-local chatwbh = getgenv.set.webhook[3][3]
+local eventwbh = getgenv.set[3][1]
+local statswbh = getgenv.set[3][2]
+local chatwbh = getgenv.set[3][3]
 
 local summonitemnames = getgenv.set[4]
 

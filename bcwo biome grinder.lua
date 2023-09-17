@@ -159,7 +159,6 @@ function messagesend(url,message)
 end
 
 player.PlayerGui.Chat.Frame.ChatChannelParentFrame.Frame_MessageLogDisplay.Scroller.DescendantAdded:Connect(function(frame)
-	if toggled == false then return end
 	if frame:IsA('Frame') then
 		for _,msg in pairs(prioritizedmsgs) do
 			if frame.TextLabel.Text == msg.Message then

@@ -19,8 +19,6 @@ local chatwbh = set[3][3]
 
 local summonitemnames = set[4]
 
-
-
 repeat task.wait() until game:IsLoaded()print("init")
 local player = game:GetService("Players").LocalPlayer
 if toggled == true then 

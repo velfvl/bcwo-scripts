@@ -9,7 +9,6 @@ literal afk machine
 credits:
 made by vel
 ]]
-getgenv().on = true
 
 local pinguser = "<@>" --@discorduserid
 

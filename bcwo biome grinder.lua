@@ -66,7 +66,7 @@ local prioritizedmsgs = {
 		["TItle"] = "Rain has arrived!",
 		["Color"] = tonumber(0xe82424)
 	},
-	[7} = {
+	[7] = {
 		["Message"] = "[Server]: Interdimensional Travelling Merchant Rain has left the island!",
 		["Name"] = "Travelling Merchant Rain",
 		["TItle"] = "Rain has left!",

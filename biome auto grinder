@@ -10,12 +10,6 @@ credits:
 made by vel
 ]]
 
-local pinguser = "<@>" --@discorduserid
-
-local eventwbh = "" --webhook
-local statswbh = "" --webhook
-local chatwbh = "" --webhook
-
 if getgenv().on == false then return end
 repeat task.wait() until game:IsLoaded()
 local player = game:GetService("Players").LocalPlayer

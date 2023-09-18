@@ -56,7 +56,7 @@ local prioritizedmsgs = {
 		["Color"] = tonumber(0xecbc00)
 	},
 	[5] = {
-		["Message"] = "The void has infiltrated reality!",
+		["Message"] = "The void is infiltrating reality!",
 		["Name"] = "The Void",
 		["Title"] = "Void has spawn!",
 		["Color"] = tonumber(0x301f41)

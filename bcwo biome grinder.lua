@@ -183,7 +183,7 @@ end)
 if game.PlaceId == 8811271345 then
 	embedsend(statswbh,getstatslogembed())
 	coroutine.wrap(function()
-		while true do task.wait()
+		while true do task.wait(.5)
 			if character:FindFirstChild("Shield") and character:FindFirstChild("ShieldForceField") and toggled ~= false then
 				character.Shield.ShieldRemote:FireServer()
 			end
@@ -199,10 +199,10 @@ if game.PlaceId == 8811271345 then
 						if not workspace:FindFirstChild(item.Spawns[i]) then
 							tool.Parent = character
 							vim:SendMouseButtonEvent(0, 0, 0, true, game, 1)
-							task.wait(.1)
+							task.wait(.25)
 							vim:SendMouseButtonEvent(0, 0, 0, false, game, 1)
 							tool.Parent = player.Backpack
-							task.wait(.1)
+							task.wait(.25)
 						end
 					end
 				end

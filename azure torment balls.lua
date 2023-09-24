@@ -1,12 +1,3 @@
---[[
-!!BCWO AURE TORMENT SCRIPT!!
--------------------------------------
-shitpost notes:
-why are you looking?
--------------------------------------
-credits:
-made by vel
-]]
 local summonitemnames = set[1]
 
 repeat task.wait() until game:IsLoaded()print("init")
@@ -15,8 +6,8 @@ player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vecte
 local character = player.Character
 local vim = game:GetService("VirtualInputManager")
 
-local pos1 = Vector.new(0,9000,0)
-local pos2 = Vector.new(-2,9,-284)
+local pos1 = Vector3.new(0,9000,0)
+local pos2 = Vector3.new(-2,9,-284)
 
 if game.PlaceId == 10228957718 then
 	--[[coroutine.wrap(function()
@@ -34,15 +25,14 @@ if game.PlaceId == 10228957718 then
 				if tool then 
 					for i = 1,#item.Spawns do
 						if not workspace:FindFirstChild(item.Spawns[i]) then
-                            character:MoveTo(pos2)
 							tool.Parent = character
 							vim:SendMouseButtonEvent(0, 0, 0, true, game, 1)
-							task.wait(.25)was
+							task.wait(.25) character:MoveTo(pos2)
 							vim:SendMouseButtonEvent(0, 0, 0, false, game, 1)
 							tool.Parent = player.Backpack
 							task.wait(.25)
-                        else
-                            character:MoveTo(pos1)
+                   		else
+                      		character:MoveTo(pos1)
 						end
 					end
 				end

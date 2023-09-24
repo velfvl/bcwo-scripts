@@ -21,7 +21,7 @@ if game.PlaceId == 10228957718 then
 	end)()]]
     game:GetService("ReplicatedStorage").VoteRemote:InvokeServer("Torment")
 	coroutine.wrap(function()
-		while true do task.wait()
+		while true do task.wait(.5)
 			character:MoveTo(mpos)
 		end
 	end)()

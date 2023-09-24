@@ -26,13 +26,13 @@ if game.PlaceId == 10228957718 then
 					for i = 1,#item.Spawns do
 						if not workspace:FindFirstChild(item.Spawns[i]) then
 							tool.Parent = character
-							vim:SendMouseButtonEvent(0, 0, 0, true, game, 1)
-							task.wait(.25) character:MoveTo(pos2)
+							vim:SendMouseButtonEvent(0, 0, 0, true, game, 1) character:MoveTo(pos2)
+							task.wait(.25)
 							vim:SendMouseButtonEvent(0, 0, 0, false, game, 1)
 							tool.Parent = player.Backpack
 							task.wait(.25)
-                   		else
-                      		character:MoveTo(pos1)
+                   				else
+                      					character:MoveTo(pos1)
 						end
 					end
 				end

@@ -9,7 +9,7 @@ local vim = game:GetService("VirtualInputManager")
 local pos1 = Vector3.new(0,9000,0)
 local pos2 = Vector3.new(-2,13,-284)
 
-local mpos
+local mpos = Vector3.new(0,9000,0)
 
 if game.PlaceId == 10228957718 then
 	--[[coroutine.wrap(function()
@@ -32,7 +32,7 @@ if game.PlaceId == 10228957718 then
 				if tool then 
 					for i = 1,#item.Spawns do
 						for _,v in pairs(workspace:GetChildren()) do
-							if v.Name == item.Spawns[i] and v.OwnerTag ~= player or not workspace:FindFirstChild(item.Spawns[i]) then
+							if v.Name == item.Spawns[i] and v:FindFirstChild("OwnerTag").Value ~= player or not workspace:FindFirstChild(item.Spawns[i]) then
 								mpos = pos2
 								tool.Parent = character
 								vim:SendMouseButtonEvent(0, 0, 0, true, game, 1)

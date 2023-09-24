@@ -7,7 +7,7 @@ local character = player.Character
 local vim = game:GetService("VirtualInputManager")
 
 local pos1 = Vector3.new(0,9000,0)
-local pos2 = Vector3.new(-2,9,-284)
+local pos2 = Vector3.new(-2,13,-284)
 
 if game.PlaceId == 10228957718 then
 	--[[coroutine.wrap(function()

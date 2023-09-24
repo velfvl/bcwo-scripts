@@ -7,7 +7,7 @@ why are you looking?
 credits:
 made by vel
 ]]
-local summonitemnames = set[4]
+local summonitemnames = set[1]
 
 repeat task.wait() until game:IsLoaded()print("init")
 local player = game:GetService("Players").LocalPlayer

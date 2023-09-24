@@ -31,15 +31,17 @@ if game.PlaceId == 10228957718 then
 				local tool = player.Backpack:FindFirstChild(item.Name) or player.Character:FindFirstChild(item.Name)
 				if tool then 
 					for i = 1,#item.Spawns do
-						if not workspace:FindFirstChild(item.Spawns[i]) or workspace:FindFirstChild(item.Spawns[i]).Name == item.Spawns[i] and workspace:FindFirstChild(item.Spawns[i]):FindFirstChild("OwnerTag").Value ~= player then
-							mpos = pos2
-							tool.Parent = character
-							vim:SendMouseButtonEvent(0, 0, 0, true, game, 1)
-							task.wait(.25)
-							vim:SendMouseButtonEvent(0, 0, 0, false, game, 1)
-							tool.Parent = player.Backpack
-							task.wait(.25)
-							mpos = pos1
+						for _,v in pairs(workspace:GetChildren()) do
+							if v.Name == item.Spawns[i] and v:FindFirstChild("OwnerTag").Value ~= player or not workspace:FindFirstChild(item.Spawns[i]) then
+								mpos = pos2
+								tool.Parent = character
+								vim:SendMouseButtonEvent(0, 0, 0, true, game, 1)
+								task.wait(.25)
+								vim:SendMouseButtonEvent(0, 0, 0, false, game, 1)
+								tool.Parent = player.Backpack
+								task.wait(.25)
+								mpos = pos1
+							end
 						end
 					end
 				end

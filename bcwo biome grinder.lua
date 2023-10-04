@@ -161,7 +161,7 @@ player.PlayerGui.Chat.Frame.ChatChannelParentFrame.Frame_MessageLogDisplay.Scrol
 				    ["color"] = msg.Color,
 				    ["fields"] = {},
 				    ["footer"] = {
-    				    ["text"] = "```Others:\nPlaceId: ".. game.PlaceId.. "\nJobId: ".. game.JobId.. "\nUserId: ".. player.UserId.. "\nPing: ".. player:GetNetworkPing() * (1000).. "ms```"
+    				    ["text"] = "Others:\nPlaceId: ".. game.PlaceId.. "\nJobId: ".. game.JobId.. "\nUserId: ".. player.UserId.. "\nPing: ".. player:GetNetworkPing() * (1000).. "ms"
     					}
 				}
 				embedsend(eventwbh,msgembed,pinguser)

@@ -4,12 +4,20 @@ made by vel
 ]]
 local summonitemnames = set[1]
 
-local cf1 = CFrame.new(0,500,0)
-local cf2 = CFrame.new(0,1700,1200)
+local cf1 = Vector3.new(0,500,0)
+local cf2 = Vector3.new(0,1700,1200)
 
 local cf = cf2
 
-repeat task.wait() until game:IsLoaded() print("init")
+local function notify(a,b,c)
+	game:GetService("StarterGui"):SetCore("SendNotification",{
+		Title = a,
+		Text = b,
+		Duration = c
+	})
+end
+
+repeat task.wait() until game:IsLoaded() notify("scirpt","init",5)
 local player = game:GetService("Players").LocalPlayer
 if toggled == true then 
 	player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vecter2.new())end)
@@ -17,10 +25,6 @@ end
 
 local character = player.Character
 local vim = game:GetService("VirtualInputManager")
-
-local function notify(a,b,c)
-	
-end
 
 local function noclip()
 	for i,v in pairs(character:GetDescendants()) do
@@ -78,12 +82,16 @@ local function isacompanion(a)
 	end
 end
 
-local function calculatehp(a)
-	local b = math.floor((a.Humanoid.Health/a.Humanoid.MaxHealth)*100+0.5) print(tostring(b))
-	if b <= 25 then
-		return true
+local calhpdb = false
+local function calculatehp(a,b)
+	local c = math.floor((b.Humanoid.Health/b.Humanoid.MaxHealth)*100+0.5)
+	if c < 40 and calhpdb == false then
+		calhpdb = true
+		print("yup")
+		healcompanion(b)
+		calhpdb = false
 	else
-		return false
+		print("nope")
 	end
 end
 
@@ -119,7 +127,7 @@ end
 
 if game.PlaceId == 8811271345 then
 	for _,base in pairs(workspace.Bases:GetChildren()) do
-		if base.owner.Value == game.Players.LocalPlayer then print("khrysos solo script teleporting...")
+		if base.owner.Value == game.Players.LocalPlayer then notify("script","teleporting to khrysos temple",math.Huge)
 			base.objects:FindFirstChild("khrysosteleporter").RemoteFunction:InvokeServer("Confirm")
 		end
 	end
@@ -140,9 +148,10 @@ elseif game.PlaceId == 8898827396 then
 				local tool = player.Backpack:FindFirstChild(item.Name) or player.Character:FindFirstChild(item.Name)
 				if tool then
 					local s = workspace:FindFirstChild(item.Spawn)
-					if s and calculatehp(s) == true and isacompanion(s) == true then
-						healcompanion(tool)
-					elseif not s then
+					if isacompanion(tool) then
+						calculatehp(tool,s)
+					end
+					if not s then
 						cf = cf1
 						revive(tool,item)
 						task.wait()
@@ -155,8 +164,8 @@ elseif game.PlaceId == 8898827396 then
 	coroutine.wrap(function()
 		while true do task.wait(.01)
 			noclip()
-			anchor(character.PrimaryPart)
-			character:SetPrimaryPartCFrame(cf)
+			--anchor(character.PrimaryPart)
+			character:MoveTo(cf)
 		end
 	end)()
 end

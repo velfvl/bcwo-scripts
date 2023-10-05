@@ -5,7 +5,7 @@ made by vel
 local summonitemnames = set[1]
 
 local cf1 = CFrame.new(0,500,0)
-local cf2 = CFrame.new(700,1700,0)
+local cf2 = CFrame.new(0,1700,1200)
 
 local cf = cf2
 
@@ -52,16 +52,22 @@ local function spawncompanion(a,b)
 end
 
 local function revivecompanion(a,b)
+	a.Parent = character
 	a:FindFirstChild('RemoteFunction'):InvokeServer("ResetReviveCooldown")
+	a.Parent = player.Backpack
 	spawncompanion(a,b)
 end
 
 local function healcompanion(a)
+	a.Parent = character
 	a:FindFirstChild('RemoteFunction'):InvokeServer("RestoreHealth")
+	a.Parent = player.Backpack
 end
 
 local function ultcompanion(a)
+	a.Parent = character
 	a:FindFirstChild('RemoteFunction'):InvokeServer("UltimateAttackPermit")
+	a.Parent = player.Backpack
 end
 
 local function isacompanion(a)
@@ -73,7 +79,8 @@ local function isacompanion(a)
 end
 
 local function calculatehp(a)
-	if (a.Humanoid.MaxHealth/a.Humanoid.Health)*100 <= 25 then
+	local b = math.floor((a.Humanoid.Health/a.Humanoid.MaxHealth)*100+0.5) print(tostring(b))
+	if b <= 25 then
 		return true
 	else
 		return false

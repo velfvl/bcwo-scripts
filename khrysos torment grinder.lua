@@ -90,7 +90,7 @@ local function startspawn()
 	for _,item in pairs(summonitemnames) do
 		local tool = player.Backpack:FindFirstChild(item.Name) or player.Character:FindFirstChild(item.Name)
 		if tool then
-			if not workspace:FindFirstChild(item.Spawn) then print('spawning '.. item.Spawn[i])
+			if not workspace:FindFirstChild(item.Spawn) then print('spawning '.. item.Spawn)
 				cf = cf1
 				if tool:FindFirstChild("RemoteFunction") then
 					spawncompanion(tool,item.CoName)

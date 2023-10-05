@@ -95,7 +95,7 @@ local function startspawn()
 		local tool = player.Backpack:FindFirstChild(item.Name) or player.Character:FindFirstChild(item.Name)
 		if tool then
 			if not workspace:FindFirstChild(item.Spawn) then print('spawning '.. item.Spawn)
-				cf = cf122
+				cf = cf1
 				if tool:FindFirstChild("RemoteFunction") then
 					spawncompanion(tool,item.CoName)
 				else

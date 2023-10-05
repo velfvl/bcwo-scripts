@@ -66,6 +66,62 @@ local prioritizedmsgs = {
 	}
 }
 
+local function click()
+	vim:SendMouseButtonEvent(0, 0, 0, true, game, 1)
+	task.wait(.25)
+	vim:SendMouseButtonEvent(0, 0, 0, false, game, 1)
+end
+
+local function spawncompanion(a,b)
+	local args = {
+		[1] = b,
+		[2] = {
+			[1] = nil,
+			[2] = character:FindFirstChild("Torso")
+		}
+	}
+	a:FindFirstChild("RemoteFunction"):InvokeServer(unpack(args))
+end
+
+local function revivecompanion(a,b)
+	a:FindFirstChild('RemoteFunction'):InvokeServer("ResetReviveCooldown")
+	spawncompanion(a,b)
+end
+
+local function healcompanion(a)
+	a:FindFirstChild('RemoteFunction'):InvokeServer("RestoreHealth")
+end
+
+local function ultcompanion(a)
+	a:FindFirstChild('RemoteFunction'):InvokeServer("UltimateAttackPermit")
+end
+
+local function isacompanion(a)
+	if a:FindFirstChild("RemoteFunction") then
+		return true
+	else
+		return false
+	end
+end
+
+local function calculatehp(a)
+	if (a.Humanoid.MaxHealth/a.Humanoid.Health)*100 <= 25 then
+		return true
+	else
+		return false
+	end
+end
+
+local function revive(a,b,c)
+	if isacompanion(c) == true then
+		spawncompanion(a,b.CoName)
+	else
+		a.Parent = character
+		click()
+		a.Parent = player.Backpack
+	end
+end
+
 function Format(Int)
 	return string.format("%02i", Int)
 end
@@ -95,7 +151,7 @@ function getstatslogembed()
 	        }
 	    },
 	    ["footer"] = {
-	        ["text"] = "```Others:\nPlaceId: ".. game.PlaceId.. "\nJobId: ".. game.JobId.. "\nUserId: ".. player.UserId.. "\nPing: ".. player:GetNetworkPing() * (1000).. "ms```"
+	        ["text"] = "Others:\nPlaceId: ".. game.PlaceId.. "\nJobId: ".. game.JobId.. "\nUserId: ".. player.UserId.. "\nPing: ".. player:GetNetworkPing() * (1000).. "ms"
 	    }
 	}
 	return statslogembed
@@ -186,14 +242,12 @@ if game.PlaceId == 8811271345 then
 			for _,item in pairs(summonitemnames) do
 				local tool = player.Backpack:FindFirstChild(item.Name) or player.Character:FindFirstChild(item.Name)
 				if tool then 
-					for i = 1,#item.Spawns do
-						if not workspace:FindFirstChild(item.Spawns[i]) then
-							tool.Parent = character
-							vim:SendMouseButtonEvent(0, 0, 0, true, game, 1)
-							task.wait(.25)
-							vim:SendMouseButtonEvent(0, 0, 0, false, game, 1)
-							tool.Parent = player.Backpack
-							task.wait(.25)
+					for i = 1,#item.Spawn do
+						local s = workspace:FindFirstChild(item.Spawn)
+						if s and calculatehp(s) and isacompanion(s) then
+							healcompanion(tool)
+						elseif not s then
+							revive(tool,item,s)
 						end
 					end
 				end

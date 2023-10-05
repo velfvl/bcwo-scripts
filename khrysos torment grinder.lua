@@ -92,7 +92,8 @@ local function startspawn()
 		if tool then
 			if not workspace:FindFirstChild(item.Spawn) then print('spawning '.. item.Spawn)
 				cf = cf1
-				if tool:FindFirstChild("RemoteFunction") then
+				local s = workspace:FindFirstChild(item.Spawn)
+				if s:FindFirstChild("RemoteFunction") then
 					spawncompanion(tool,item.CoName)
 				else
 					tool.Parent = character

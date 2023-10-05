@@ -85,7 +85,7 @@ end
 local calhpdb = false
 local function calculatehp(a,b)
 	local c = math.floor((b.Humanoid.Health/b.Humanoid.MaxHealth)*100+0.5)
-	if c < 40 and calhpdb == false then
+	if c < 50 and calhpdb == false then
 		calhpdb = true
 		print("yup")
 		healcompanion(b)
@@ -148,9 +148,9 @@ elseif game.PlaceId == 8898827396 then
 				local tool = player.Backpack:FindFirstChild(item.Name) or player.Character:FindFirstChild(item.Name)
 				if tool then
 					local s = workspace:FindFirstChild(item.Spawn)
-					if isacompanion(tool) then
+					--[[if isacompanion(tool) then
 						calculatehp(tool,s)
-					end
+					end]]
 					if not s then
 						cf = cf1
 						revive(tool,item)

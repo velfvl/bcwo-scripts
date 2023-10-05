@@ -4,12 +4,6 @@ made by vel
 ]]
 local summonitemnames = set[1]
 
-repeat task.wait() until game:IsLoaded()print("init")
-local player = game:GetService("Players").LocalPlayer
-if toggled == true then 
-	player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vecter2.new())end)
-end
-
 local cf1 = CFrame.new(2,500,-0.5)
 local cf2 = CFrame.new(0,1700,0)
 

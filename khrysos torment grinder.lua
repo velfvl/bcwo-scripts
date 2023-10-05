@@ -18,6 +18,10 @@ end
 local character = player.Character
 local vim = game:GetService("VirtualInputManager")
 
+local function notify(a,b,c)
+	
+end
+
 local function noclip()
 	for i,v in pairs(character:GetDescendants()) do
         if v:IsA("BasePart") then
@@ -91,9 +95,8 @@ local function startspawn()
 		local tool = player.Backpack:FindFirstChild(item.Name) or player.Character:FindFirstChild(item.Name)
 		if tool then
 			if not workspace:FindFirstChild(item.Spawn) then print('spawning '.. item.Spawn)
-				cf = cf1
-				local s = workspace:FindFirstChild(item.Spawn)
-				if s:FindFirstChild("RemoteFunction") then
+				cf = cf122
+				if tool:FindFirstChild("RemoteFunction") then
 					spawncompanion(tool,item.CoName)
 				else
 					tool.Parent = character

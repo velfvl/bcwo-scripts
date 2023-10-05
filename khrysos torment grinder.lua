@@ -4,8 +4,8 @@ made by vel
 ]]
 local summonitemnames = set[1]
 
-local cf1 = CFrame.new(2,500,-0.5)
-local cf2 = CFrame.new(0,1700,0)
+local cf1 = CFrame.new(0,500,0)
+local cf2 = CFrame.new(700,1700,0)
 
 local cf = cf2
 
@@ -80,14 +80,14 @@ local function calculatehp(a)
 	end
 end
 
-local function revive(a,b,c)
-	if isacompanion(c) == true then
+local function revive(a,b)
+	a.Parent = character
+	if b and isacompanion(a) == true then
 		spawncompanion(a,b.CoName)
 	else
-		a.Parent = character
 		click()
-		a.Parent = player.Backpack
 	end
+	a.Parent = player.Backpack
 end
 
 local function startspawn()
@@ -96,14 +96,14 @@ local function startspawn()
 		if tool then
 			if not workspace:FindFirstChild(item.Spawn) then print('spawning '.. item.Spawn)
 				cf = cf1
-				if tool:FindFirstChild("RemoteFunction") then
+				tool.Parent = character
+				if isacompanion(tool) then
 					spawncompanion(tool,item.CoName)
 				else
-					tool.Parent = character
 					click()
-					tool.Parent = player.Backpack
 				end
 				task.wait(1)
+				tool.Parent = player.Backpack
 				cf = cf2
 			end
 		end
@@ -133,11 +133,11 @@ elseif game.PlaceId == 8898827396 then
 				local tool = player.Backpack:FindFirstChild(item.Name) or player.Character:FindFirstChild(item.Name)
 				if tool then
 					local s = workspace:FindFirstChild(item.Spawn)
-					if s and calculatehp(s) and isacompanion(s) then
+					if s and calculatehp(s) == true and isacompanion(s) == true then
 						healcompanion(tool)
 					elseif not s then
 						cf = cf1
-						revive(tool,item,s)
+						revive(tool,item)
 						task.wait()
 						cf = cf2
 					end

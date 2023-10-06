@@ -19,9 +19,7 @@ end
 
 repeat task.wait() until game:IsLoaded() notify("scirpt","init",5)
 local player = game:GetService("Players").LocalPlayer
-if toggled == true then 
-	player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vecter2.new())end)
-end
+player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vecter2.new())end)
 
 local character = player.Character
 local vim = game:GetService("VirtualInputManager")
@@ -84,14 +82,16 @@ end
 
 local calhpdb = false
 local function calculatehp(a,b)
-	local c = math.floor((b.Humanoid.Health/b.Humanoid.MaxHealth)*100+0.5)
-	if c < 50 and calhpdb == false then
-		calhpdb = true
-		print("yup")
-		healcompanion(b)
-		calhpdb = false
-	else
-		print("nope")
+	if b:FindFirstChild("Humanoid") then
+		local c = math.floor((b.Humanoid.Health/b.Humanoid.MaxHealth)*100+0.5)
+		if c < 50 and calhpdb == false then
+			calhpdb = true
+			print("yup")
+			healcompanion(a)
+			calhpdb = false
+		else
+			print("nope")
+		end
 	end
 end
 
@@ -148,9 +148,9 @@ elseif game.PlaceId == 8898827396 then
 				local tool = player.Backpack:FindFirstChild(item.Name) or player.Character:FindFirstChild(item.Name)
 				if tool then
 					local s = workspace:FindFirstChild(item.Spawn)
-					--[[if isacompanion(tool) then
+					if isacompanion(tool) then
 						calculatehp(tool,s)
-					end]]
+					end
 					if not s then
 						cf = cf1
 						revive(tool,item)

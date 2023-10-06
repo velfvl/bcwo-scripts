@@ -9,6 +9,8 @@ local cf2 = Vector3.new(0,1700,1200)
 
 local cf = cf2
 
+local version = "1.2.1"
+
 local function notify(a,b,c)
 	game:GetService("StarterGui"):SetCore("SendNotification",{
 		Title = a,
@@ -17,6 +19,7 @@ local function notify(a,b,c)
 	})
 end
 
+notify("scirpt",version,5)
 repeat task.wait() until game:IsLoaded() notify("scirpt","init",5)
 local player = game:GetService("Players").LocalPlayer
 player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vecter2.new())end)

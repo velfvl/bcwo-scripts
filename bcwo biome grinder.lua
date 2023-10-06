@@ -10,7 +10,7 @@ local chatwbh = set[2][3]
 
 local summonitemnames = set[3]
 
-local version = "1.3.6"
+local version = "v1.3.6"
 
 local function notify(a,b,c)
 	game:GetService("StarterGui"):SetCore("SendNotification",{

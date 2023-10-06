@@ -42,6 +42,11 @@ local function click()
 	vim:SendMouseButtonEvent(0, 0, 0, false, game, 1)
 end
 
+local function teleportback()
+	local a = game:GetService("TeleportService")
+	a:TeleportAsync(8811271345,player)
+end
+
 local function spawncompanion(a,b)
 	local args = {
 		[1] = b,
@@ -82,15 +87,16 @@ end
 
 local calhpdb = false
 local function calculatehp(a,b)
-	if b:FindFirstChild("Humanoid") then
+	if b and b:FindFirstChild("Humanoid") then
 		local c = math.floor((b.Humanoid.Health/b.Humanoid.MaxHealth)*100+0.5)
 		if c < 50 and calhpdb == false then
 			calhpdb = true
-			print("yup")
+			--print("yup")
+			notify("script","healing ".. b.Name)
 			healcompanion(a)
 			calhpdb = false
 		else
-			print("nope")
+			--print("nope")
 		end
 	end
 end
@@ -109,7 +115,7 @@ local function startspawn()
 	for _,item in pairs(summonitemnames) do
 		local tool = player.Backpack:FindFirstChild(item.Name) or player.Character:FindFirstChild(item.Name)
 		if tool then
-			if not workspace:FindFirstChild(item.Spawn) then print('spawning '.. item.Spawn)
+			if not workspace:FindFirstChild(item.Spawn) then notify("script","spawning ".. item.Spawn)
 				cf = cf1
 				tool.Parent = character
 				if isacompanion(tool) then
@@ -162,7 +168,7 @@ elseif game.PlaceId == 8898827396 then
 		end
 	end)()
 	coroutine.wrap(function()
-		while true do task.wait(.01)
+		while true do task.wait(.1)
 			noclip()
 			--anchor(character.PrimaryPart)
 			character:MoveTo(cf)

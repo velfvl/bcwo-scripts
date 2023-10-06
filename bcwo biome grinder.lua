@@ -10,7 +10,15 @@ local chatwbh = set[2][3]
 
 local summonitemnames = set[3]
 
-repeat task.wait() until game:IsLoaded()print("init")
+local function notify(a,b,c)
+	game:GetService("StarterGui"):SetCore("SendNotification",{
+		Title = a,
+		Text = b,
+		Duration = c
+	})
+end
+
+repeat task.wait() until game:IsLoaded() notify("scirpt","init",5)
 local player = game:GetService("Players").LocalPlayer
 player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vecter2.new())end)
 
@@ -64,12 +72,6 @@ local prioritizedmsgs = {
 	}
 }
 
-local function click()
-	vim:SendMouseButtonEvent(0, 0, 0, true, game, 1)
-	task.wait(.25)
-	vim:SendMouseButtonEvent(0, 0, 0, false, game, 1)
-end
-
 local function spawncompanion(a,b)
 	local args = {
 		[1] = b,
@@ -82,16 +84,22 @@ local function spawncompanion(a,b)
 end
 
 local function revivecompanion(a,b)
+	a.Parent = character
 	a:FindFirstChild('RemoteFunction'):InvokeServer("ResetReviveCooldown")
+	a.Parent = player.Backpack
 	spawncompanion(a,b)
 end
 
 local function healcompanion(a)
+	a.Parent = character
 	a:FindFirstChild('RemoteFunction'):InvokeServer("RestoreHealth")
+	a.Parent = player.Backpack
 end
 
 local function ultcompanion(a)
+	a.Parent = character
 	a:FindFirstChild('RemoteFunction'):InvokeServer("UltimateAttackPermit")
+	a.Parent = player.Backpack
 end
 
 local function isacompanion(a)
@@ -102,21 +110,47 @@ local function isacompanion(a)
 	end
 end
 
-local function calculatehp(a)
-	if (a.Humanoid.MaxHealth/a.Humanoid.Health)*100 <= 25 then
-		return true
-	else
-		return false
+local calhpdb = false
+local function calculatehp(a,b)
+	if b and b:FindFirstChild("Humanoid") then
+		local c = math.floor((b.Humanoid.Health/b.Humanoid.MaxHealth)*100+0.5)
+		if c < 50 and calhpdb == false then
+			calhpdb = true
+			--print("yup")
+			notify("script","healing ".. b.Name)
+			healcompanion(a)
+			calhpdb = false
+		else
+			--print("nope")
+		end
 	end
 end
 
-local function revive(a,b,c)
-	if isacompanion(c) == true then
+local function revive(a,b)
+	a.Parent = character
+	if b and isacompanion(a) == true then
 		spawncompanion(a,b.CoName)
 	else
-		a.Parent = character
 		click()
-		a.Parent = player.Backpack
+	end
+	a.Parent = player.Backpack
+end
+
+local function startspawn()
+	for _,item in pairs(summonitemnames) do
+		local tool = player.Backpack:FindFirstChild(item.Name) or player.Character:FindFirstChild(item.Name)
+		if tool then
+			if not workspace:FindFirstChild(item.Spawn) then notify("script","spawning ".. item.Spawn)
+				tool.Parent = character
+				if isacompanion(tool) then
+					spawncompanion(tool,item.CoName)
+				else
+					click()
+				end
+				task.wait(1)
+				tool.Parent = player.Backpack
+			end
+		end
 	end
 end
 
@@ -227,6 +261,7 @@ end)
 
 if game.PlaceId == 8811271345 then
 	embedsend(statswbh,getstatslogembed())
+	startspawn()
 	coroutine.wrap(function()
 		while true do task.wait(.5)
 			if character:FindFirstChild("Shield") and not character:FindFirstChild("ShieldForceField") then
@@ -236,26 +271,26 @@ if game.PlaceId == 8811271345 then
 	end)()
 	coroutine.wrap(function()
 		while true do task.wait()
-			--character:SetPrimaryPartCFrame(spawncf)
 			for _,item in pairs(summonitemnames) do
 				local tool = player.Backpack:FindFirstChild(item.Name) or player.Character:FindFirstChild(item.Name)
-				if tool then 
-					for i = 1,#item.Spawn do
-						local s = workspace:FindFirstChild(item.Spawn)
-						if s and calculatehp(s) and isacompanion(s) then
-							healcompanion(tool)
-						elseif not s then
-							revive(tool,item,s)
-						end
+				if tool then
+					local s = workspace:FindFirstChild(item.Spawn)
+					if isacompanion(tool) then
+						calculatehp(tool,s)
+					end
+					if not s then
+						revive(tool,item)
+						task.wait()
 					end
 				end
-			end
+			end	 
+		end
+	end)()
+	
+	coroutine.wrap(function()
+		while task.wait(1800) do
+			embedsend(statswbh,getstatslogembed())
 		end
 	end)()
 end
 
-coroutine.wrap(function()
-	while task.wait(1800) do
-		embedsend(statswbh,getstatslogembed())
-	end
-end)()

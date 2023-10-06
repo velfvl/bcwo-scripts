@@ -9,7 +9,7 @@ local cf2 = Vector3.new(0,1700,1200)
 
 local cf = cf2
 
-local version = "1.2.1"
+local version = "v1.2.1"
 
 local function notify(a,b,c)
 	game:GetService("StarterGui"):SetCore("SendNotification",{

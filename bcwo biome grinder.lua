@@ -20,7 +20,7 @@ local function notify(a,b,c)
 	})
 end
 
-notify("scirpt",version,5)
+notify("scirpt",version,math.huge)
 repeat task.wait() until game:IsLoaded() notify("scirpt","init",5)
 local player = game:GetService("Players").LocalPlayer
 player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vector2.new())end)
@@ -166,7 +166,7 @@ function timeconv(secs)
 	secs = secs - mins*60
 	local hrs = (mins - mins%60)/60
 	mins = mins - hrs*60
-	return Format(hrs).." hrs, "..Format(mins).." mins and "..Format(secs).." secs"
+	return Format(hrs)..":"..Format(mins)..":"..Format(secs)
 end
 
 function getstatslogembed()

@@ -12,9 +12,7 @@ local summonitemnames = set[3]
 
 repeat task.wait() until game:IsLoaded()print("init")
 local player = game:GetService("Players").LocalPlayer
-if toggled == true then 
-	player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vecter2.new())end)
-end
+player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vecter2.new())end)
 
 local character = player.Character
 local vim = game:GetService("VirtualInputManager")

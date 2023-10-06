@@ -10,6 +10,8 @@ local chatwbh = set[2][3]
 
 local summonitemnames = set[3]
 
+local version = "1.3.6"
+
 local function notify(a,b,c)
 	game:GetService("StarterGui"):SetCore("SendNotification",{
 		Title = a,
@@ -18,6 +20,7 @@ local function notify(a,b,c)
 	})
 end
 
+notify("scirpt",version,5)
 repeat task.wait() until game:IsLoaded() notify("scirpt","init",5)
 local player = game:GetService("Players").LocalPlayer
 player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vector2.new())end)

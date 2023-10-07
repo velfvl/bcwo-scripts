@@ -20,8 +20,7 @@ local function notify(a,b,c)
 	})
 end
 
-notify("scirpt",version,math.huge)
-repeat task.wait() until game:IsLoaded() notify("scirpt","init",5)
+repeat task.wait() until game:IsLoaded() notify("scirpt","init'd biome grinder ".. version,5)
 local player = game:GetService("Players").LocalPlayer
 player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vector2.new())end)
 

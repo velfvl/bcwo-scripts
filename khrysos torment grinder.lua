@@ -1,4 +1,4 @@
---[[
+-[[
 credits:
 made by vel
 ]]
@@ -23,7 +23,7 @@ local summonsset
 
 if isfile('vels_bcwo_hopper.vel') then
 	local settings_contents = readfile('vels_bcwo_hopper.vel')
-	local settings_data = JSONDecode(settings_contents)
+	local settings_data = hs:JSONDecode(settings_contents)
 	summonsset = settings_data.summonsset
 else
 	summonsset = set[1]

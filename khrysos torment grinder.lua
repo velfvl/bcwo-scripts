@@ -12,7 +12,7 @@ local function notify(a,b,c)
 	})
 end
 
-repeat task.wait() until game:IsLoaded() notify("scirpt","init ".. version,5)
+repeat task.wait() until game:IsLoaded() notify("scirpt","init'd khrysos torment grinder ".. version,5)
 local hs = game:GetService("HttpService")
 local player = game:GetService("Players").LocalPlayer
 player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vector2.new())end)

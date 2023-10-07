@@ -25,10 +25,6 @@ local function noclip()
     end
 end
 
-local function anchor(a)
-	a.Anchored = true
-end
-
 local function tweento(a)
 	local lo = CFrame.new(0,-20,0)
 	local h = character:FindFirstChild("HumanoidRootPart")
@@ -40,7 +36,7 @@ local function tweento(a)
 end
 
 local function mine(a)
-	tweento(a:FindFirstChild("Mineral").CFrame*CFrame.new(0,.5,2))
+	tweento(a:FindFirstChild("Mineral").CFrame*CFrame.new(0,2.5,3.5))
 	repeat
 		--character:FindFirstChild("HumanoidRootPart").CFrame = a:FindFirstChild("Base").CFrame*CFrame.new(0,.5,2)
 		local pick = character:FindFirstChild("Pickaxe of Balance") or player:FindFirstChild("Backpack") and player:FindFirstChild("Backpack"):FindFirstChild("Pickaxe of Balance")
@@ -85,7 +81,6 @@ elseif game.PlaceId == 9032150459 then
 	end)()
 	coroutine.wrap(function()
 		while true do task.wait(.05)
-			anchor(character:WaitForChild("HumanoidRootPart"))
 			noclip()
 		end
 	end)()

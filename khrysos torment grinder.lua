@@ -1,8 +1,8 @@
--[[
+--[[
 credits:
 made by vel
 ]]
-local version = "v1.2.2"
+local version = "v1.2.5"
 
 local function notify(a,b,c)
 	game:GetService("StarterGui"):SetCore("SendNotification",{

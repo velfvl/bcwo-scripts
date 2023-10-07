@@ -85,15 +85,15 @@ end
 
 local function creepygetterridder(a)
 	notify("script","ACTIVATING CREEPY GETTERRIDDER 5000!!!!",5)
-	character:FindFirstChild("HumanoidRootPart").CFrame = a:FindFirstChild("HumanoidRootPart").CFrame*CFrame.new(0,25,30)
+	tweento(a:FindFirstChild("HumanoidRootPart").CFrame*CFrame.new(0,30,30))
 	tweento(a:FindFirstChild("HumanoidRootPart").CFrame*CFrame.new(1000,50,1000))
-	repeat task.wait() character:FindFirstChild("HumanoidRootPart").CFrame = a:FindFirstChild("HumanoidRootPart").CFrame*CFrame.new(1000,50,1000) until not a
+	repeat task.wait() character:MoveTo(a:FindFirstChild("HumanoidRootPart").Position+Vector3.new(1000,50,1000)) until not workspace:FindFirstChild(a.Name)
 end
 
 local function creepycheck()
 	for _,v in pairs(workspace:GetChildren()) do
 		if v.Name == "Creepy" then
-			notify("script","OHHH MYYY GAUDDD ITSAAA CREEEEEEEPPY",5)
+			notify("script","OHHH MYYY GAWWUDDD ITSAAA CREEEEEEEPPY",5)
 			task.wait(2)
 			creepygetterridder(v)
 		end
@@ -109,7 +109,7 @@ local function float()
 		f.Transparency = .5
 		f.Size = Vector3.new(2,0.2,1.5)
 		f.Anchored = true
-		local fv = -3
+		local fv = -2.9
 		f.CFrame = character:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,fv,0)
 		fd = character:FindFirstChildOfClass('Humanoid').Died:Connect(function()
 			ff:Disconnect()
@@ -156,7 +156,7 @@ if game.PlaceId == 8811271345 then
 elseif game.PlaceId == 8829364740 then
 	queue_on_teleport([[loadstring(game:HttpGet('https://raw.githubusercontent.com/velfvl/bcwo-scripts/main/bcwo%20auto%20miner.lua'))()]])
 	workspace.Map.BeneathTeleporter.RemoteFunction:InvokeServer("Confirm") notify("script","teleporting to beneath",math.Huge)
-elseif game.PlaceId == 9032150459 then fb() nccam() float()
+elseif game.PlaceId == 9032150459 then fb() float() nccam()
 	coroutine.wrap(function()
 		while true do task.wait()
 			for _,ore in pairs(workspace.Map.Ores:GetChildren()) do

@@ -2,7 +2,7 @@
 credits:
 made by vel
 ]]
-local version = "v1.1.0"
+local version = "v1.2.2"
 
 local function notify(a,b,c)
 	game:GetService("StarterGui"):SetCore("SendNotification",{
@@ -13,7 +13,7 @@ local function notify(a,b,c)
 end
 
 repeat task.wait() until game:IsLoaded() notify("scirpt","init'd auto mine ".. version,5)
-local player = game:GetService("Players").LocalPlayer
+local player = game:GetService("Players").LocalPlayer or game:GetService("Players").PlayerAdded:Wait()
 player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vector2.new())end)
 local character = player.Character or player.CharacterAdded:Wait()
 
@@ -45,7 +45,7 @@ local function nccam()
 	if not sc or not getgc or not gc then
 		return notify('script', 'your executor sucks')
 	end
-	local pop = speaker.PlayerScripts.PlayerModule.CameraModule.ZoomController.Popper
+	local pop = player.PlayerScripts.PlayerModule.CameraModule.ZoomController.Popper
 	for _, v in pairs(getgc()) do
 		if type(v) == 'function' and getfenv(v).script == pop then
 			for i, v1 in pairs(gc(v)) do
@@ -59,8 +59,13 @@ local function nccam()
 	end
 end
 
-local function tweento(a)
-	local lo = CFrame.new(0,-20,0)
+local function tweento(a,b)
+	local lo
+	if b then
+		lo = CFrame.new(0,-20,0)
+	else
+		lo = CFrame.new(0,0,0)
+	end
 	local h = character:FindFirstChild("HumanoidRootPart")
 	h.CFrame = h.CFrame*lo
 	local c = game:GetService("TweenService"):Create(h,TweenInfo.new(1,Enum.EasingStyle.Linear),{CFrame = a*lo})
@@ -69,8 +74,26 @@ local function tweento(a)
 	h.CFrame = a
 end
 
+local function creepygetterridder(a)
+	notify("script","ACTIVATING CREEPY GETTERRIDDER 5000!!!!",5)
+	character:FindFirstChild("HumanoidRootPart").CFrame = a:FindFirstChild("HumanoidRootPart").CFrame*CFrame.new(0,25,30)
+	tweento(a:FindFirstChild("HumanoidRootPart").CFrame*CFrame.new(1000,50,1000))
+	repeat task.wait() character:FindFirstChild("HumanoidRootPart").CFrame = a:FindFirstChild("HumanoidRootPart").CFrame*CFrame.new(1000,50,1000) until not a
+end
+
+local function creepycheck()
+	for _,v in pairs(workspace:GetChildren()) do
+		if v.Name == "Creepy" then
+			notify("script","OHHH MYYY GAUDDD ITSAAA CREEEEEEEPPY",5)
+			task.wait(2)
+			creepygetterridder(v)
+		end
+	end
+end
+
 local function mine(a)
-	tweento(a:FindFirstChild("Mineral").CFrame*CFrame.new(0,2.5,3.5))
+	creepycheck()
+	tweento(a:FindFirstChild("Mineral").CFrame*CFrame.new(0,2.5,3.5),true)
 	repeat
 		--character:FindFirstChild("HumanoidRootPart").CFrame = a:FindFirstChild("Base").CFrame*CFrame.new(0,.5,2)
 		local pick = character:FindFirstChild("Pickaxe of Balance") or player:FindFirstChild("Backpack") and player:FindFirstChild("Backpack"):FindFirstChild("Pickaxe of Balance")

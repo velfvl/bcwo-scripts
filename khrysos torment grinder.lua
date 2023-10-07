@@ -13,7 +13,7 @@ local function notify(a,b,c)
 end
 
 repeat task.wait() until game:IsLoaded() notify("scirpt","init'd auto mine ".. version,5)
-local player = game:GetService("Players").LocalPlayer
+local player = game:GetService("Players").LocalPlayer or game:GetService("Players").PlayerAdded:Wait()
 player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vector2.new())end)
 local character = player.Character or player.CharacterAdded:Wait()
 
@@ -77,7 +77,7 @@ end
 local function creepygetterridder(a)
 	notify("script","ACTIVATING CREEPY GETTERRIDDER 5000!!!!",5)
 	character:FindFirstChild("HumanoidRootPart").CFrame = a:FindFirstChild("HumanoidRootPart").CFrame*CFrame.new(0,25,30)
-	tweento(a:FindFirstChild("HumanoidRootPart").CFrame*CFrame.new(0,70,0))
+	tweento(a:FindFirstChild("HumanoidRootPart").CFrame*CFrame.new(1000,50,1000))
 	repeat task.wait() until not a
 end
 

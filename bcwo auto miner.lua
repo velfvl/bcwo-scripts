@@ -105,7 +105,7 @@ local function float()
 	if character and not character:FindFirstChild(fn) then
 		local f = Instance.new('Part')
 		f.Name = fn
-		f.Parent = pchar
+		f.Parent = character
 		f.Transparency = .5
 		f.Size = Vector3.new(2,0.2,1.5)
 		f.Anchored = true
@@ -119,7 +119,7 @@ local function float()
 		local function floatloop()
 			local h = character:FindFirstChild("Humanoid")
 			if character:FindFirstChild(fn) and h then
-				f.CFrame = h.CFrame * CFrame.new(0,FloatValue,0)
+				f.CFrame = h.CFrame * CFrame.new(0,fv,0)
 			else
 				ff:Disconnect()
 				f:Destroy()

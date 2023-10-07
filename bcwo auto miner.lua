@@ -2,36 +2,25 @@
 local player = game:GetService("Players").LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 
+local function tweento(a,b)
+	local c = game:GetService("TweeService"):Create(a:FindFirstChild("HumanoidRootPart"),TweenInfo.new(1,Enum.EasingStyle.Linear),{CFrame = b.CFrame})
+	c:Play()
+	c.Completed:Wait()
+end
+
 while true do task.wait()
 	for _,ore in pairs(workspace.Map.Ores:GetChildren()) do
 		local base = ore:FindFirstChild("Base")
 		if base and base.Position.Y <= 440 then
-			if #priority ~= 0 then
-				for i = 1,#priority do
-					if priority[i] == ore.Name then
-						--print('prior '.. ore.Name)
-						repeat
-							character:SetPrimaryPartCFrame(base.CFrame)
-							if character:FindFirstChild("Pickaxe of Balance") and player:FindFirstChild("Backpack") then
-								character:FindFirstChild("Pickaxe of Balance").RemoteFunction:InvokeServer("mine")
-							else
-								player.Backpack:FindFirstChild("Pickaxe of Balance").Parent = character
-								character:FindFirstChild("Pickaxe of Balance").RemoteFunction:InvokeServer("mine")
-							end
-						until not ore:FindFirstChild("Base")
-					end
+			repeat
+				tweento(player,base.CFrame)
+				if character:FindFirstChild("Pickaxe of Balance") and player:FindFirstChild("Backpack") then
+					character:FindFirstChild("Pickaxe of Balance").RemoteFunction:InvokeServer("mine")
+				else
+					player.Backpack:FindFirstChild("Pickaxe of Balance").Parent = character
+					character:FindFirstChild("Pickaxe of Balance").RemoteFunction:InvokeServer("mine")
 				end
-			else
-				repeat
-					character:SetPrimaryPartCFrame(base.CFrame)
-					if character:FindFirstChild("Pickaxe of Balance") and player:FindFirstChild("Backpack") then
-						character:FindFirstChild("Pickaxe of Balance").RemoteFunction:InvokeServer("mine")
-					else
-						player.Backpack:FindFirstChild("Pickaxe of Balance").Parent = character
-						character:FindFirstChild("Pickaxe of Balance").RemoteFunction:InvokeServer("mine")
-					end
-				until not ore:FindFirstChild("Base")
-			end
+			until not ore:FindFirstChild("Base")
 		end
 	end
 end

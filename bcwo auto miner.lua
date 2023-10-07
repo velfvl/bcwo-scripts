@@ -109,7 +109,7 @@ local function float()
 		f.Transparency = .5
 		f.Size = Vector3.new(2,0.2,1.5)
 		f.Anchored = true
-		local fv = -3.1
+		local fv = -3
 		f.CFrame = character:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,fv,0)
 		fd = character:FindFirstChildOfClass('Humanoid').Died:Connect(function()
 			ff:Disconnect()

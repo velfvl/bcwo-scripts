@@ -117,7 +117,7 @@ local function float()
 			fd:Disconnect()
 		end)
 		local function floatloop()
-			local h = character:FindFirstChild("Humanoid")
+			local h = character:FindFirstChild("HumanoidRootPart")
 			if character:FindFirstChild(fn) and h then
 				f.CFrame = h.CFrame * CFrame.new(0,fv,0)
 			else

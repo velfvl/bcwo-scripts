@@ -2,7 +2,7 @@
 credits:
 made by vel
 ]]
-local version = "v1.2.2"
+local version = "v1.1.0"
 
 local function notify(a,b,c)
 	game:GetService("StarterGui"):SetCore("SendNotification",{
@@ -91,6 +91,36 @@ local function creepycheck()
 	end
 end
 
+fn = randomString()
+local function float()
+	if character and not character:FindFirstChild(fn) then
+		local f = Instance.new('Part')
+		f.Name = fn
+		f.Parent = pchar
+		f.Transparency = .5
+		f.Size = Vector3.new(2,0.2,1.5)
+		f.Anchored = true
+		local fv = -3.1
+		f.CFrame = character:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,fv,0)
+		fd = character:FindFirstChildOfClass('Humanoid').Died:Connect(function()
+			ff:Disconnect()
+			f:Destroy()
+			fd:Disconnect()
+		end)
+		local function floatloop()
+			local h = character:FindFirstChild("Humanoid")
+			if character:FindFirstChild(floatName) and h then
+				f.CFrame = h.CFrame * CFrame.new(0,FloatValue,0)
+			else
+				ff:Disconnect()
+				f:Destroy()
+				fd:Disconnect()
+			end
+		end			
+		ff = game:GetService("RunService").Heartbeat:Connect(floatloop)
+	end
+end
+
 local function mine(a)
 	creepycheck()
 	tweento(a:FindFirstChild("Mineral").CFrame*CFrame.new(0,2.5,3.5),true)
@@ -117,7 +147,7 @@ if game.PlaceId == 8811271345 then
 elseif game.PlaceId == 8829364740 then
 	queue_on_teleport([[loadstring(game:HttpGet('https://raw.githubusercontent.com/velfvl/bcwo-scripts/main/bcwo%20auto%20miner.lua'))()]])
 	workspace.Map.BeneathTeleporter.RemoteFunction:InvokeServer("Confirm") notify("script","teleporting to beneath",math.Huge)
-elseif game.PlaceId == 9032150459 then fb() nccam()
+elseif game.PlaceId == 9032150459 then fb() nccam() float()
 	coroutine.wrap(function()
 		while true do task.wait()
 			for _,ore in pairs(workspace.Map.Ores:GetChildren()) do

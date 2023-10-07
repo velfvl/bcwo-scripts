@@ -1,13 +1,9 @@
 --made by vel
-
-local toggled = set[1]
-local priority = set[2]
-
 local player = game:GetService("Players").LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 
-while true do if toggled == false then break end
-	for _,ore in pairs(workspace.Map.Ores:GetChildren()) do if toggled == false then break end
+while true do task.wait()
+	for _,ore in pairs(workspace.Map.Ores:GetChildren()) do
 		local base = ore:FindFirstChild("Base")
 		if base and base.Position.Y <= 440 then
 			if #priority ~= 0 then

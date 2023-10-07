@@ -60,10 +60,11 @@ local function nccam()
 end
 
 local function tweento(a,b)
-	if b == true then
-		local lo = CFrame.new(0,-20,0)
+	local lo
+	if b then
+		lo = CFrame.new(0,-20,0)
 	else
-		local lo = CFrame.new()
+		lo = CFrame.new(0,0,0)
 	end
 	local h = character:FindFirstChild("HumanoidRootPart")
 	h.CFrame = h.CFrame*lo

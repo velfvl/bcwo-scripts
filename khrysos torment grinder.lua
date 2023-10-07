@@ -160,7 +160,7 @@ local function checkalghar()
 end
 
 local function startspawn()
-	for _,item in pairs(summonitemnames) do
+	for _,item in pairs(summonsset) do
 		local tool = player.Backpack:FindFirstChild(item.Name) or player.Character:FindFirstChild(item.Name)
 		if tool then
 			if not workspace:FindFirstChild(item.Spawn) then notify("script","spawning ".. item.Spawn,5)
@@ -200,7 +200,7 @@ elseif game.PlaceId == 8898827396 then
 	end)()
 	coroutine.wrap(function()
 		while true do task.wait()
-			for _,item in pairs(summonitemnames) do
+			for _,item in pairs(summonsset) do
 				local tool = player.Backpack:FindFirstChild(item.Name) or player.Character:FindFirstChild(item.Name)
 				if tool then
 					local s = workspace:FindFirstChild(item.Spawn)

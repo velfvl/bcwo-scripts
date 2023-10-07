@@ -25,6 +25,40 @@ local function noclip()
     end
 end
 
+local function fb()
+	local l = game:GetService("Lighting")
+	l.Brightness = 2
+	l.ClockTime = 14
+	l.FogEnd = 100000
+	l.GlobalShadows = false
+	l.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+	for i,v in pairs(l:GetDescendants()) do
+		if v:IsA("Atmosphere") then
+			v:Destroy()
+		end
+	end
+end
+
+local function nccam()
+	local sc = (debug and debug.setconstant) or setconstant
+	local gc = (debug and debug.getconstants) or getconstants
+	if not sc or not getgc or not gc then
+		return notify('script', 'your executor sucks')
+	end
+	local pop = speaker.PlayerScripts.PlayerModule.CameraModule.ZoomController.Popper
+	for _, v in pairs(getgc()) do
+		if type(v) == 'function' and getfenv(v).script == pop then
+			for i, v1 in pairs(gc(v)) do
+				if tonumber(v1) == .25 then
+					sc(v, i, 0)
+				elseif tonumber(v1) == 0 then
+					sc(v, i, .25)
+				end
+			end
+		end
+	end
+end
+
 local function tweento(a)
 	local lo = CFrame.new(0,-20,0)
 	local h = character:FindFirstChild("HumanoidRootPart")
@@ -60,7 +94,7 @@ if game.PlaceId == 8811271345 then
 elseif game.PlaceId == 8829364740 then
 	queue_on_teleport([[loadstring(game:HttpGet('https://raw.githubusercontent.com/velfvl/bcwo-scripts/main/bcwo%20auto%20miner.lua'))()]])
 	workspace.Map.BeneathTeleporter.RemoteFunction:InvokeServer("Confirm") notify("script","teleporting to beneath",math.Huge)
-elseif game.PlaceId == 9032150459 then
+elseif game.PlaceId == 9032150459 then fb() nccam()
 	coroutine.wrap(function()
 		while true do task.wait()
 			for _,ore in pairs(workspace.Map.Ores:GetChildren()) do

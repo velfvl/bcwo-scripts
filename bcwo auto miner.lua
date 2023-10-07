@@ -25,12 +25,8 @@ local function noclip()
     end
 end
 
-local function anchor(a)
-	a.Anchored = true
-end
-
 local function tweento(a)
-	local lo = CFrame.new(0,-5,0)
+	local lo = CFrame.new(0,-20,0)
 	local h = character:FindFirstChild("HumanoidRootPart")
 	h.CFrame = h.CFrame*lo
 	local c = game:GetService("TweenService"):Create(h,TweenInfo.new(1,Enum.EasingStyle.Linear),{CFrame = a*lo})
@@ -40,8 +36,9 @@ local function tweento(a)
 end
 
 local function mine(a)
-	tweento(a:FindFirstChild("Base").CFrame*CFrame.new(0,.5,2))
+	tweento(a:FindFirstChild("Mineral").CFrame*CFrame.new(0,0,2))
 	repeat
+		character:FindFirstChild("HumanoidRootPart").CFrame = a:FindFirstChild("Base").CFrame*CFrame.new(0,.5,2)
 		local pick = character:FindFirstChild("Pickaxe of Balance") or player:FindFirstChild("Backpack") and player:FindFirstChild("Backpack"):FindFirstChild("Pickaxe of Balance")
 		if pick and pick.Parent == character then
 			character:FindFirstChild("Pickaxe of Balance").RemoteFunction:InvokeServer("mine") --print("mines")
@@ -50,7 +47,7 @@ local function mine(a)
 		else
 			notify("script", "you either dont have pob equipped or you dont have pob", 5)
 		end
-	until not a:FindFirstChild("Base") or a:FindFirstChild("Mineral").Transparency == 1
+	until not a:FindFirstChild("Mineral") or a:FindFirstChild("Mineral").Transparency == 1
 end
 
 if game.PlaceId == 8811271345 then
@@ -63,7 +60,7 @@ if game.PlaceId == 8811271345 then
 elseif game.PlaceId == 8829364740 then
 	queue_on_teleport([[loadstring(game:HttpGet('https://raw.githubusercontent.com/velfvl/bcwo-scripts/main/bcwo%20auto%20miner.lua'))()]])
 	workspace.Map.BeneathTeleporter.RemoteFunction:InvokeServer("Confirm") notify("script","teleporting to beneath",math.Huge)
-elseif game.PlaceId == 8811271345 then
+elseif game.PlaceId == 9032150459 then
 	coroutine.wrap(function()
 		while true do task.wait()
 			for _,ore in pairs(workspace.Map.Ores:GetChildren()) do

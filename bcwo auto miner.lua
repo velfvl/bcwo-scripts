@@ -12,7 +12,7 @@ local function notify(a,b,c)
 	})
 end
 
-repeat task.wait() until game:IsLoaded() notify("scirpt","init ".. version,5)
+repeat task.wait() until game:IsLoaded() notify("scirpt","init'd auto mine ".. version,5)
 local player = game:GetService("Players").LocalPlayer
 player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vector2.new())end)
 local character = player.Character
@@ -35,19 +35,33 @@ local function tweento(a,b)
 	c.Completed:Wait()
 end
 
+local function mine(a)
+	tweento(character,a:FindFirstChild("Base"))
+	repeat
+		local pick = character:FindFirstChild("Pickaxe of Balance") or player:FindFirstChild("Backpack") and player:FindFirstChild("Backpack"):FindFirstChild("Pickaxe of Balance")
+		if pick and pick.Parent == character then
+			character:FindFirstChild("Pickaxe of Balance").RemoteFunction:InvokeServer("mine")
+		else
+			pick.Parent = character
+		end
+	until not a:FindFirstChild("Base") or a:FindFirstChild("Base").Transparency == 1
+end
+
 noclip()
 anchor(character:FindFirstChild("HumanoidRootPart"))
 while true do task.wait()
 	for _,ore in pairs(workspace.Map.Ores:GetChildren()) do
 		local base = ore:FindFirstChild("Base")
 		if base and base.Position.Y <= 440 then
-			tweento(character,base)
-			repeat
-				local pick = character:FindFirstChild("Pickaxe of Balance") or player:FindFirstChild("Backpack") and player:FindFirstChild("Backpack"):FindFirstChild("Pickaxe of Balance")
-				if pick then
-					character:FindFirstChild("Pickaxe of Balance").RemoteFunction:InvokeServer("mine")
+			if #set[1] ~= 0 then 
+				for i=1,#set[1] do
+					if ore.Name == set[1][i] then
+						mine(ore)
+					end
 				end
-			until not ore:FindFirstChild("Base") or ore:FindFirstChild("Base").Transparency == 1
+			else
+				mine(ore)
+			end
 		end
 	end
 end

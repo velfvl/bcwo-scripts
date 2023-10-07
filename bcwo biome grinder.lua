@@ -23,8 +23,7 @@ end
 repeat task.wait() until game:IsLoaded() notify("scirpt","init'd biome grinder ".. version,5)
 local player = game:GetService("Players").LocalPlayer
 player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vector2.new())end)
-
-local character = player.Character
+local character = player.Character or player.CharacterAdded:Wait()
 local vim = game:GetService("VirtualInputManager")
 
 --local spawncf = character.PrimaryPart.CFrame*CFrame.new(0,40,0)

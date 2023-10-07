@@ -47,21 +47,28 @@ local function mine(a)
 	until not a:FindFirstChild("Base") or a:FindFirstChild("Base").Transparency == 1
 end
 
-noclip()
-anchor(character:FindFirstChild("HumanoidRootPart"))
-while true do task.wait()
-	for _,ore in pairs(workspace.Map.Ores:GetChildren()) do
-		local base = ore:FindFirstChild("Base")
-		if base and base.Position.Y <= 440 then
-			if #set[1] ~= 0 then 
-				for i=1,#set[1] do
-					if ore.Name == set[1][i] then
-						mine(ore)
+coroutine.wrap(function()
+	while true do task.wait()
+		for _,ore in pairs(workspace.Map.Ores:GetChildren()) do
+			local base = ore:FindFirstChild("Base")
+			if base and base.Position.Y <= 440 then
+				if #set[1] ~= 0 or set[1][1] ~= "" then 
+					for i=1,#set[1] do
+						if ore.Name == set[1][i] then
+							mine(ore)
+						end
 					end
+				else
+					mine(ore)
 				end
-			else
-				mine(ore)
 			end
 		end
 	end
-end
+end)()
+
+coroutine.wrap(function()
+	while true do task.wait(.05)
+		noclip()
+		anchor(character:FindFirstChild("HumanoidRootPart"))
+	end
+end)()

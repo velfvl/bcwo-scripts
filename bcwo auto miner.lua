@@ -17,6 +17,15 @@ local player = game:GetService("Players").LocalPlayer or game:GetService("Player
 player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vector2.new())end)
 local character = player.Character or player.CharacterAdded:Wait()
 
+function rstring()
+	local length = math.random(10,20)
+	local array = {}
+	for i = 1, length do
+		array[i] = string.char(math.random(32, 126))
+	end
+	return table.concat(array)
+end
+
 local function noclip()
 	for i,v in pairs(character:GetDescendants()) do
         if v:IsA("BasePart") then
@@ -91,7 +100,7 @@ local function creepycheck()
 	end
 end
 
-fn = randomString()
+fn = rstring()
 local function float()
 	if character and not character:FindFirstChild(fn) then
 		local f = Instance.new('Part')

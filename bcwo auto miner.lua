@@ -12,7 +12,7 @@ local function notify(a,b,c)
 	})
 end
 
-repeat task.wait() until game:IsLoaded() notify("scirpt","init'd auto mine ".. version,5)
+repeat task.wait() until game:IsLoaded() notify("scirpt","init'd auto mine ".. version,5) print("init")
 local player = game:GetService("Players").LocalPlayer or game:GetService("Players").PlayerAdded:Wait()
 player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vector2.new())end)
 local character = player.Character or player.CharacterAdded:Wait()

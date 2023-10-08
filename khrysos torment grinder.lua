@@ -2,7 +2,7 @@
 credits:
 made by vel
 ]]
-local version = "v1.1.0"
+local version = "v1.2.5"
 
 local function notify(a,b,c)
 	game:GetService("StarterGui"):SetCore("SendNotification",{
@@ -12,10 +12,40 @@ local function notify(a,b,c)
 	})
 end
 
-repeat task.wait() until game:IsLoaded() notify("scirpt","init'd auto mine ".. version,5)
-local player = game:GetService("Players").LocalPlayer or game:GetService("Players").PlayerAdded:Wait()
+repeat task.wait() until game:IsLoaded() notify("scirpt","init'd khrysos torment grinder ".. version,5)
+local hs = game:GetService("HttpService")
+local player = game:GetService("Players").LocalPlayer
 player.Idled:Connect(function()game:GetService("VirtualUser"):ClickButton2(Vector2.new())end)
-local character = player.Character or player.CharacterAdded:Wait()
+local character = player.Character
+local vim = game:GetService("VirtualInputManager")
+
+local summonsset
+
+if isfile('vels_bcwo_hopper.vel') then
+	local settings_contents = readfile('vels_bcwo_hopper.vel')
+	local settings_data = hs:JSONDecode(settings_contents)
+	summonsset = settings_data.summonsset
+else
+	summonsset = set[1]
+	local settings_format = {summonsset = set[1]}
+	local settings_data = hs:JSONEncode(settings_format)
+	writefile('vels_bcwo_hopper.vel',settings_data)
+	notify('script','successfully injected virus into your computer (jk) -vel')
+end
+
+local function overwrite_settings()
+	print('overwriting settings')
+	local temp_settings = {summonsset = set[1]}
+	local temp_settings_data = hs:JSONEncode(temp_settings)
+	writefile('vels_bcwo_hopper.vel',temp_settings_data)
+end
+
+local cf1 = Vector3.new(0,500,0)
+local cf2 = Vector3.new(0,1700,1200)
+
+local cf = cf2
+
+local iscommitingtask = false
 
 local function noclip()
 	for i,v in pairs(character:GetDescendants()) do
@@ -25,124 +55,174 @@ local function noclip()
     end
 end
 
-local function fb()
-	local l = game:GetService("Lighting")
-	l.Brightness = 2
-	l.ClockTime = 14
-	l.FogEnd = 100000
-	l.GlobalShadows = false
-	l.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
-	for i,v in pairs(l:GetDescendants()) do
-		if v:IsA("Atmosphere") then
-			v:Destroy()
+local function anchor(a)
+	a.Anchored = true
+end
+
+local function click()
+	vim:SendMouseButtonEvent(0, 0, 0, true, game, 1)
+	task.wait(.25)
+	vim:SendMouseButtonEvent(0, 0, 0, false, game, 1)
+end
+
+local function teleportback()
+	local a = game:GetService("TeleportService")
+	queue_on_teleport([[loadstring(game:HttpGet('https://raw.githubusercontent.com/velfvl/bcwo-scripts/main/khrysos%20torment%20grinder.lua'))()]])
+	a:Teleport(8811271345,player)
+end
+
+local function spawncompanion(a,b)
+	local args = {
+		[1] = b,
+		[2] = {
+			[1] = nil,
+			[2] = character:FindFirstChild("Torso")
+		}
+	}
+	a:FindFirstChild("RemoteFunction"):InvokeServer(unpack(args))
+end
+
+local function revivecompanion(a,b)
+	if iscommitingtask == false then
+		iscommitingtask = true
+		a.Parent = character
+		a:FindFirstChild('RemoteFunction'):InvokeServer("ResetReviveCooldown")
+		a.Parent = player.Backpack
+		spawncompanion(a,b)
+		iscommitingtask = false
+	end
+end
+
+local function healcompanion(a)
+	if iscommitingtask == false then
+		iscommitingtask = true
+		a.Parent = character
+		a:FindFirstChild('RemoteFunction'):InvokeServer("RestoreHealth")
+		a.Parent = player.Backpack
+		iscommitingtask = false
+	end
+end
+
+local function ultcompanion(a)
+	if iscommitingtask == false then
+		iscommitingtask = true
+		a.Parent = character
+		a:FindFirstChild('RemoteFunction'):InvokeServer("UltimateAttackPermit")
+		a.Parent = player.Backpack
+		iscommitingtask = false
+	end
+end
+
+local function isacompanion(a)
+	if a:FindFirstChild("RemoteFunction") then
+		return true
+	else
+		return false
+	end
+end
+
+local calhpdb = false
+local function calculatehp(a,b)
+	if iscommitingtask == false then
+		iscommitingtask = true
+		if b and b:FindFirstChild("Humanoid") then
+			local c = math.floor((b.Humanoid.Health/b.Humanoid.MaxHealth)*100+0.5)
+			if c < 50 and calhpdb == false then
+				calhpdb = true
+				--print("yup")
+				notify("script","healing ".. b.Name,5)
+				healcompanion(a)
+				calhpdb = false
+			else
+				--print("nope")
+			end
+		end
+		iscommitingtask = false
+	end
+end
+
+local function revive(a,b)
+	a.Parent = character
+	if b and isacompanion(a) == true then
+		revivecompanion(a,b.CoName)
+	else
+		click()
+	end
+	a.Parent = player.Backpack
+end
+
+local function checkalghar()
+	for _,v in pairs(workspace:GetChildren()) do
+		if v.Name == "Alghar, the Avatar of Avarice" then
+			teleportback()
 		end
 	end
 end
 
-local function nccam()
-	local sc = (debug and debug.setconstant) or setconstant
-	local gc = (debug and debug.getconstants) or getconstants
-	if not sc or not getgc or not gc then
-		return notify('script', 'your executor sucks')
-	end
-	local pop = player.PlayerScripts.PlayerModule.CameraModule.ZoomController.Popper
-	for _, v in pairs(getgc()) do
-		if type(v) == 'function' and getfenv(v).script == pop then
-			for i, v1 in pairs(gc(v)) do
-				if tonumber(v1) == .25 then
-					sc(v, i, 0)
-				elseif tonumber(v1) == 0 then
-					sc(v, i, .25)
+local function startspawn()
+	for _,item in pairs(summonsset) do
+		local tool = player.Backpack:FindFirstChild(item.Name) or player.Character:FindFirstChild(item.Name)
+		if tool then
+			if not workspace:FindFirstChild(item.Spawn) then notify("script","spawning ".. item.Spawn,5)
+				cf = cf1
+				tool.Parent = character
+				if isacompanion(tool) then
+					spawncompanion(tool,item.CoName)
+				else
+					click()
 				end
+				task.wait(1)
+				tool.Parent = player.Backpack
+				cf = cf2
 			end
 		end
 	end
-end
-
-local function tweento(a,b)
-	local lo
-	if b then
-		lo = CFrame.new(0,-20,0)
-	else
-		lo = CFrame.new(0,0,0)
-	end
-	local h = character:FindFirstChild("HumanoidRootPart")
-	h.CFrame = h.CFrame*lo
-	local c = game:GetService("TweenService"):Create(h,TweenInfo.new(1,Enum.EasingStyle.Linear),{CFrame = a*lo})
-	c:Play()
-	c.Completed:Wait()
-	h.CFrame = a
-end
-
-local function creepygetterridder(a)
-	notify("script","ACTIVATING CREEPY GETTERRIDDER 5000!!!!",5)
-	character:FindFirstChild("HumanoidRootPart").CFrame = a:FindFirstChild("HumanoidRootPart").CFrame*CFrame.new(0,25,30)
-	tweento(a:FindFirstChild("HumanoidRootPart").CFrame*CFrame.new(1000,50,1000))
-	repeat task.wait() until not a
-end
-
-local function creepycheck()
-	for _,v in pairs(workspace:GetChildren()) do
-		if v.Name == "Creepy" then
-			notify("script","OHHH MYYY GAUDDD ITSAAA CREEEEEEEPPY",5)
-			task.wait(2)
-			creepygetterridder(v)
-		end
-	end
-end
-
-local function mine(a)
-	creepycheck()
-	tweento(a:FindFirstChild("Mineral").CFrame*CFrame.new(0,2.5,3.5),true)
-	repeat
-		--character:FindFirstChild("HumanoidRootPart").CFrame = a:FindFirstChild("Base").CFrame*CFrame.new(0,.5,2)
-		local pick = character:FindFirstChild("Pickaxe of Balance") or player:FindFirstChild("Backpack") and player:FindFirstChild("Backpack"):FindFirstChild("Pickaxe of Balance")
-		if pick and pick.Parent == character then
-			character:FindFirstChild("Pickaxe of Balance").RemoteFunction:InvokeServer("mine") --print("mines")
-		elseif pick then
-			pick.Parent = character
-		else
-			notify("script", "you either dont have pob equipped or you dont have pob", 5)
-		end
-	until not a:FindFirstChild("Mineral") or a:FindFirstChild("Mineral").Transparency == 1
 end
 
 if game.PlaceId == 8811271345 then
+	overwrite_settings()
 	for _,base in pairs(workspace.Bases:GetChildren()) do
-		if base.owner.Value == game.Players.LocalPlayer then notify("script","teleporting to caverns",math.Huge)
-			queue_on_teleport([[loadstring(game:HttpGet('https://raw.githubusercontent.com/velfvl/bcwo-scripts/main/bcwo%20auto%20miner.lua'))()]])
-			base.objects:FindFirstChild("cavernsteleporter").RemoteFunction:InvokeServer("Confirm")
+		if base.owner.Value == game.Players.LocalPlayer then notify("script","teleporting to khrysos temple",math.Huge)
+			queue_on_teleport([[loadstring(game:HttpGet('https://raw.githubusercontent.com/velfvl/bcwo-scripts/main/khrysos%20torment%20grinder.lua'))()]])
+			base.objects:FindFirstChild("khrysosteleporter").RemoteFunction:InvokeServer("Confirm")
 		end
 	end
-elseif game.PlaceId == 8829364740 then
-	queue_on_teleport([[loadstring(game:HttpGet('https://raw.githubusercontent.com/velfvl/bcwo-scripts/main/bcwo%20auto%20miner.lua'))()]])
-	workspace.Map.BeneathTeleporter.RemoteFunction:InvokeServer("Confirm") notify("script","teleporting to beneath",math.Huge)
-elseif game.PlaceId == 9032150459 then fb() nccam()
+elseif game.PlaceId == 8898827396 then
+	game:GetService("ReplicatedStorage").VoteRemote:InvokeServer("Torment")
+	game:GetService("ReplicatedStorage").WageRemote:InvokeServer("Standard")
+	startspawn()
+	coroutine.wrap(function()
+		while true do task.wait(.5)
+			if character:FindFirstChild("Shield") and not character:FindFirstChild("ShieldForceField") then
+				character.Shield.ShieldRemote:FireServer()
+			end
+		end
+	end)()
 	coroutine.wrap(function()
 		while true do task.wait()
-			for _,ore in pairs(workspace.Map.Ores:GetChildren()) do
-				local base = ore:FindFirstChild("Base")
-				if base and base.Position.Y <= 440 then
-					--[[if #set[1] ~= 0 or set[1][1] ~= "" then print('piroity set is on')
-						for i=1,#set[1] do
-							if ore.Name == set[1][i] then
-								mine(ore)
-							end
-						end
-					else]]
-						mine(ore)
-					--end
+			for _,item in pairs(summonsset) do
+				local tool = player.Backpack:FindFirstChild(item.Name) or player.Character:FindFirstChild(item.Name)
+				if tool then
+					local s = workspace:FindFirstChild(item.Spawn)
+					if isacompanion(tool) then
+						calculatehp(tool,s)
+					end
+					if not s then
+						cf = cf1
+						revive(tool,item)
+						task.wait(1)
+						cf = cf2
+					end
 				end
-			end
+			end	 
 		end
 	end)()
 	coroutine.wrap(function()
 		while true do task.wait(.05)
 			noclip()
+			--anchor(character.PrimaryPart)
+			checkalghar()
+			character:MoveTo(cf)
 		end
 	end)()
---[[elseif game.PlaceId == 8830255143 then
-	notify("script","ohhhh myyy godddd how are you in limbo mf")]]
-	--queue_on_teleport([[loadstring(game:HttpGet('https://raw.githubusercontent.com/velfvl/bcwo-scripts/main/bcwo%20auto%20miner.lua'))()]])
-	--tweento(CFrame.new(0,500,0))
 end

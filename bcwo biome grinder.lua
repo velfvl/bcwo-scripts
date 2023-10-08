@@ -8,7 +8,7 @@ local eventwbh = set[2][1]
 local statswbh = set[2][2]
 local chatwbh = set[2][3]
 
-local summonitemnames = set[3]
+local summonsset = set[3]
 
 local version = "v1.3.6"
 
@@ -85,22 +85,34 @@ local function spawncompanion(a,b)
 end
 
 local function revivecompanion(a,b)
-	a.Parent = character
-	a:FindFirstChild('RemoteFunction'):InvokeServer("ResetReviveCooldown")
-	a.Parent = player.Backpack
-	spawncompanion(a,b)
+	if iscommitingtask == false then
+		iscommitingtask = true
+		a.Parent = character
+		a:FindFirstChild('RemoteFunction'):InvokeServer("ResetReviveCooldown")
+		a.Parent = player.Backpack
+		spawncompanion(a,b)
+		iscommitingtask = false
+	end
 end
 
 local function healcompanion(a)
-	a.Parent = character
-	a:FindFirstChild('RemoteFunction'):InvokeServer("RestoreHealth")
-	a.Parent = player.Backpack
+	if iscommitingtask == false then
+		iscommitingtask = true
+		a.Parent = character
+		a:FindFirstChild('RemoteFunction'):InvokeServer("RestoreHealth")
+		a.Parent = player.Backpack
+		iscommitingtask = false
+	end
 end
 
 local function ultcompanion(a)
-	a.Parent = character
-	a:FindFirstChild('RemoteFunction'):InvokeServer("UltimateAttackPermit")
-	a.Parent = player.Backpack
+	if iscommitingtask == false then
+		iscommitingtask = true
+		a.Parent = character
+		a:FindFirstChild('RemoteFunction'):InvokeServer("UltimateAttackPermit")
+		a.Parent = player.Backpack
+		iscommitingtask = false
+	end
 end
 
 local function isacompanion(a)
@@ -113,24 +125,28 @@ end
 
 local calhpdb = false
 local function calculatehp(a,b)
-	if b and b:FindFirstChild("Humanoid") then
-		local c = math.floor((b.Humanoid.Health/b.Humanoid.MaxHealth)*100+0.5)
-		if c < 50 and calhpdb == false then
-			calhpdb = true
-			--print("yup")
-			notify("script","healing ".. b.Name)
-			healcompanion(a)
-			calhpdb = false
-		else
-			--print("nope")
+	if iscommitingtask == false then
+		iscommitingtask = true
+		if b and b:FindFirstChild("Humanoid") then
+			local c = math.floor((b.Humanoid.Health/b.Humanoid.MaxHealth)*100+0.5)
+			if c < 50 and calhpdb == false then
+				calhpdb = true
+				--print("yup")
+				notify("script","healing ".. b.Name,5)
+				healcompanion(a)
+				calhpdb = false
+			else
+				--print("nope")
+			end
 		end
+		iscommitingtask = false
 	end
 end
 
 local function revive(a,b)
 	a.Parent = character
 	if b and isacompanion(a) == true then
-		spawncompanion(a,b.CoName)
+		revivecompanion(a,b.CoName)
 	else
 		click()
 	end
@@ -138,10 +154,10 @@ local function revive(a,b)
 end
 
 local function startspawn()
-	for _,item in pairs(summonitemnames) do
+	for _,item in pairs(summonsset) do
 		local tool = player.Backpack:FindFirstChild(item.Name) or player.Character:FindFirstChild(item.Name)
 		if tool then
-			if not workspace:FindFirstChild(item.Spawn) then notify("script","spawning ".. item.Spawn)
+			if not workspace:FindFirstChild(item.Spawn) then notify("script","spawning ".. item.Spawn,5)
 				tool.Parent = character
 				if isacompanion(tool) then
 					spawncompanion(tool,item.CoName)
@@ -272,7 +288,7 @@ if game.PlaceId == 8811271345 then
 	end)()
 	coroutine.wrap(function()
 		while true do task.wait()
-			for _,item in pairs(summonitemnames) do
+			for _,item in pairs(summonsset) do
 				local tool = player.Backpack:FindFirstChild(item.Name) or player.Character:FindFirstChild(item.Name)
 				if tool then
 					local s = workspace:FindFirstChild(item.Spawn)
@@ -281,13 +297,12 @@ if game.PlaceId == 8811271345 then
 					end
 					if not s then
 						revive(tool,item)
-						task.wait()
+						task.wait(1)
 					end
 				end
 			end	 
 		end
 	end)()
-	
 	coroutine.wrap(function()
 		while task.wait(1800) do
 			embedsend(statswbh,getstatslogembed())

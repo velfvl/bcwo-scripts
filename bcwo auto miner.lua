@@ -86,8 +86,8 @@ end
 local function creepygetterridder(a)
 	notify("script","ACTIVATING CREEPY GETTERRIDDER 5000!!!!",5)
 	tweento(a:FindFirstChild("HumanoidRootPart").CFrame*CFrame.new(0,30,30))
-	tweento(a:FindFirstChild("HumanoidRootPart").CFrame*CFrame.new(1000,50,1000))
-	repeat task.wait() character:MoveTo(a:FindFirstChild("HumanoidRootPart").Position+Vector3.new(1000,50,1000)) until not workspace:FindFirstChild(a.Name)
+	tweento(a:FindFirstChild("HumanoidRootPart").CFrame*CFrame.new(957,410,515))
+	repeat task.wait() until not workspace:FindFirstChild(a.Name)
 end
 
 local function creepycheck()
@@ -97,36 +97,6 @@ local function creepycheck()
 			task.wait(2)
 			creepygetterridder(v)
 		end
-	end
-end
-
-fn = rstring()
-local function float()
-	if character and not character:FindFirstChild(fn) then
-		local f = Instance.new('Part')
-		f.Name = fn
-		f.Parent = character
-		f.Transparency = .5
-		f.Size = Vector3.new(2,0.2,1.5)
-		f.Anchored = true
-		local fv = -2.9
-		f.CFrame = character:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,fv,0)
-		fd = character:FindFirstChildOfClass('Humanoid').Died:Connect(function()
-			ff:Disconnect()
-			f:Destroy()
-			fd:Disconnect()
-		end)
-		local function floatloop()
-			local h = character:FindFirstChild("HumanoidRootPart")
-			if character:FindFirstChild(fn) and h then
-				f.CFrame = h.CFrame * CFrame.new(0,fv,0)
-			else
-				ff:Disconnect()
-				f:Destroy()
-				fd:Disconnect()
-			end
-		end			
-		ff = game:GetService("RunService").Heartbeat:Connect(floatloop)
 	end
 end
 
@@ -156,7 +126,7 @@ if game.PlaceId == 8811271345 then
 elseif game.PlaceId == 8829364740 then
 	queue_on_teleport([[loadstring(game:HttpGet('https://raw.githubusercontent.com/velfvl/bcwo-scripts/main/bcwo%20auto%20miner.lua'))()]])
 	workspace.Map.BeneathTeleporter.RemoteFunction:InvokeServer("Confirm") notify("script","teleporting to beneath",math.Huge)
-elseif game.PlaceId == 9032150459 then fb() float() nccam()
+elseif game.PlaceId == 9032150459 then fb() nccam()
 	coroutine.wrap(function()
 		while true do task.wait()
 			for _,ore in pairs(workspace.Map.Ores:GetChildren()) do
